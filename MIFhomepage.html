@@ -20,22 +20,23 @@
   firebase.initializeApp(config);
   </script>
 </head>
-<body onload="myFunction()">
+<body>
+
+	<div id="loader"></div>
+<div style="display:none;" id="myDiv" class="animate-bottom">
 <div class="dropdown">
-<p>Choose Category</p>
-  <select class="dropbtn" id="myDropdown" onChange="filter()">
-    <option>cat1</option>
-    <option>cat2</option>
-    <option>cat3</option>
-    <option>cat4</option>
-    <option>cat5</option>
-    <option>cat6</option>
+	<p>חפש לפי קטגוריה</p>
+	<select class="dropbtn" id="myDropdown" onChange="filter()">
+    <option value='all'>כל הפרויקטים</option>
+    <option>טכנולוגיה</option>
+    <option>רהיטים</option>
+    <option>הישרדות</option>
+    <option>כלי נגינה</option>
+    <option>בישול</option>
+    <option>אחר</option>
 
  </select>
 </div>
-	<div id="loader"></div>
-
-	<div style="display:none;" id="myDiv" class="animate-bottom">
 		<div id = "list">
 			<div class = "projectImagesOutline">
 				
@@ -43,24 +44,51 @@
 
 		
 		</div>
-		<div id="buttons">
+		<div id="buttons2">
 		<button onclick="goToCreatePage()" class="homePageButton" >להעלות פרוייקט חדש</button>
 	</div>
 	</div>
 	<script>
-		
-		function filter() {
-			$("#list").html(""); //clear all inner tags
-			
-			for (var i = 0; i < all_projects.length; i++) {
-				o = all_projects[i];
-				PROJECTIMAGE= o.val().METADATA.FinishImage;
-				if($(myDropdown).children("option:selected").val().equals(o.val().METADATA.Category) {
-					$("#list").append("<div class='projectImagesOutline'> <a href = 'MIFindividualCraftPage-updated.html?id=" + o.key + "'> <img class='homeProjectImages' src ='"+ PROJECTIMAGE +"''> <div class = 'projectName'>" + o.val().METADATA.CraftTitle + "</a></div>");
-				}
-			}
+	function toggleLogic(){
+	console.log("Toggle Logic");
+	var filtered = $("#myDropdown").children("option:selected").val().toString();
+	var all=$("#myDropdown option[value='all']").text();
+		if (filtered===all){
+			console.log("test 1");
+			loadPage();
+		}else{
+			filter();
 		}
 		
+	
+	}
+	function filter() {
+			$("#list").html(""); //clear all inner tags
+			var filtered = $("#myDropdown").children("option:selected").val().toString();
+			console.log(filtered);
+			var x = 0;
+			
+			if(filtered==="all") {
+				//console.log("Filtered is all");
+				loadPage();
+			} else {
+			
+				for (var i = 0; i < all_projects.length; i++) {
+					o = all_projects[i];
+					PROJECTIMAGE= o.val().METADATA.FinishImage;
+					var meta=o.val().METADATA.Category;
+					if(filtered===meta) {
+						// if (filtered == o.val().METADATA.Category)
+						x++;
+						$("#list").append("<div class='projectImagesOutline'> <a href = 'MIFindividualCraftPage-updated.html?id=" + o.key + "'> <img class='homeProjectImages' src ='"+ PROJECTIMAGE +"''> <div class = 'projectName'>" + o.val().METADATA.CraftTitle + "</a></div>");
+					}
+				}
+				if(x === 0) {
+					//HTML GOES HERE
+					$("#list").append("אין פרויקטים בקטגוריה של  " + filtered);
+				}
+			}
+	}
 		var myVar;
 		function myFunction() {
   			myVar = setTimeout(showPage, 2000);
@@ -93,15 +121,19 @@
 		});
 		
 		function loadPage(){
+			console.log("test 2");
 			for (var i = 0; i < all_projects.length; i++) {
 				o = all_projects[i];
 				PROJECTIMAGE= o.val().METADATA.FinishImage;
 				$("#list").append("<div class='projectImagesOutline'> <a href = 'MIFindividualCraftPage-updated.html?id=" + o.key + "'> <img class='homeProjectImages' src ='"+ PROJECTIMAGE +"''> <div class = 'projectName'>" + o.val().METADATA.CraftTitle + "</a></div>");
 		
 			}
+			myFunction();
 		}
+				
 		
 
 	</script>
 </body>
 </html>
+
