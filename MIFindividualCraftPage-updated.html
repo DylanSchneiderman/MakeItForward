@@ -33,7 +33,7 @@
 		<div id = topDiv>
 			<button id="homeButton" onclick = "goToHome()" style="font-size:24px"><i class="fa fa-home"></i></button>
 			<div id="craftTitle">
-			שולחן עבודה מעץ
+			
 			</div>
 		</div>
 
@@ -45,12 +45,12 @@
 
 	
 	<div id="crafterDiv">
-		<span id = "crafterName">גפן גלדסטון</span>
+		<span id = "crafterName"></span>
 		<i id = "userIcon" class='fas fa-user-circle'></i>
 	</div>
 
 	<div id="craftDescription">
-		זהו שולחן עץ חסון מושלם להכנת כל מיני פרויקטים חדשים
+		
 	</div>
 
 
@@ -100,7 +100,7 @@
    		}
    			
    		let goToHome = function(){
-   			window.location.href="MIFhomepage.html"
+   			window.location.href="index.html"
    		}
 		
 		function grabMetaData(){
@@ -113,7 +113,7 @@
    			$("#craftTitle").html(Title);
    			$("#crafterName").text(Author);
    			$("#craftDescription").html(Desc);
-			$("#userIcon").attr("src", AuthorPic);
+			$("#userIcon").prop("src", AuthorPic);
    		}
 		STEPNUM = 1;	
 	   	function addImageStep(){
