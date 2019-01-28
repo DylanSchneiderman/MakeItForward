@@ -24,8 +24,9 @@
 
 	<div id="loader"></div>
 <div style="display:none;" id="myDiv" class="animate-bottom">
+<div id="holder">
 <div class="dropdown">
-	<p>חפש לפי קטגוריה</p>
+	<p id="choosecat">חפש לפי קטגוריה</p>
 	<select class="dropbtn" id="myDropdown" onChange="filter()">
     <option value='all'>כל הפרויקטים</option>
     <option>טכנולוגיה</option>
@@ -37,7 +38,13 @@
 
  </select>
 </div>
+<div id="Searching">
+      <input type="text" placeholder="חיפוש" name="search" id="searchBar" onChange="search()">
+      <button type="submit" id="searchButton"><i class="fa fa-search" style="color:white;"></i></button>
+</div>
+</div>
 		<div id = "list">
+		
 			<div class = "projectImagesOutline">
 				
 			</div>
@@ -45,7 +52,7 @@
 		
 		</div>
 		<div id="buttons2">
-		<button onclick="goToCreatePage()" class="homePageButton" >להעלות פרוייקט חדש</button>
+		<button onclick="goToCreatePage()" class="homePageButton" >העלת פרויקט חדש</button>
 	</div>
 	</div>
 	<script>
@@ -62,11 +69,48 @@
 		
 	
 	}
+	
+	function search() {
+			$("#list").html(""); //clear all inner tags
+			var searched = $("#searchBar").val().toString();
+			console.log(searched);
+			var x = 0;
+			$("#myDropdown").val("all");
+			
+			if(searched==="") {
+				//console.log("Filtered is all");
+				loadPage();
+			} else {
+			
+				for (var i = 0; i < all_projects.length; i++) {
+					o = all_projects[i];
+					PROJECTIMAGE= o.val().METADATA.FinishImage;
+					var title=o.val().METADATA.CraftTitle;
+					if(title.toLowerCase().indexOf(searched.toLowerCase()) >= 0) {
+						// if (searched == o.val().METADATA.Category)
+						x++;
+						$("#list").append("<div class='projectImagesOutline'> <a href = 'MIFindividualCraftPage-updated.html?id=" + o.key + "'> <img class='homeProjectImages' src ='"+ PROJECTIMAGE +"''> <div class = 'projectName'>" + o.val().METADATA.CraftTitle + "</a></div>");
+					}
+				}
+				if(x === 0) {
+					//HTML GOES HERE
+					$("#list").append("<div id='noResult'> אין פרויקטים בשם  " + searched + "</div>");
+				}
+				
+			}
+	}
+	
+	function getSearchBar() {
+		return $("#searchBar").val().toString();
+	
+	}
+	
 	function filter() {
 			$("#list").html(""); //clear all inner tags
 			var filtered = $("#myDropdown").children("option:selected").val().toString();
 			console.log(filtered);
 			var x = 0;
+			$("#searchBar").val("");
 			
 			if(filtered==="all") {
 				//console.log("Filtered is all");
@@ -85,7 +129,7 @@
 				}
 				if(x === 0) {
 					//HTML GOES HERE
-					$("#list").append("אין פרויקטים בקטגוריה של  " + filtered);
+					$("#list").append("<div id='noResult'>אין פרויקטים בקטגוריה של "+ filtered + "</div>");
 				}
 			}
 	}
@@ -136,4 +180,3 @@
 	</script>
 </body>
 </html>
-
