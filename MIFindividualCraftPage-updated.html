@@ -23,7 +23,7 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body onload="myFunction()">
+<body onload="grabSteps()">
 
 
 	<div id="loader"></div>
@@ -70,7 +70,6 @@
 		var myVar;
 		function myFunction() {
   			myVar = setTimeout(showPage, 2000);
-  			grabSteps();
 		}
 		function showPage() {
   			document.getElementById("loader").style.display = "none";
@@ -141,7 +140,7 @@
 	   			$("#materialsList").append('<li>'+tool+'</li>');
 	   		}
 	   		
-	   		
+	   		myFunction();
 	   		
 	   		
 	   		
